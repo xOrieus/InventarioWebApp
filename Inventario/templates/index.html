@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario - Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 1rem;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            border-radius: 4px;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h4 class="text-center mb-4">Inventario</h4>
+        <a href="/productos">Productos</a>
+        <a href="/proveedores">Proveedores</a>
+        <a href="/departamentos">Departamentos</a>
+        <a href="/lotes">Lotes</a>>
+    </div>
+    <div class="content">
+        <h1>Bienvenido al Dashboard</h1>
+        <p>Aquí puedes gestionar todos los aspectos de tu inventario.</p>
+        <section id="productos">
+            <h2>Productos</h2>
+            <p>Sección para gestionar los productos.</p>
+        </section>
+        <section id="proveedores">
+            <h2>Proveedores</h2>
+            <p>Sección para gestionar los proveedores.</p>
+        </section>
+        <section id="departamentos">
+            <h2>Departamentos</h2>
+            <p>Sección para gestionar los departamentos.</p>
+        </section>
+        <section id="lotes">
+            <h2>Lotes</h2>
+            <p>Sección para gestionar los lotes.</p>
+        </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
