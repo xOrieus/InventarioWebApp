@@ -12,5 +12,5 @@ si tienes un problema con las migrations
 ve al directorio
 InventarioWebApp\Inventario\InvoPro\migrations
 y borra los archivos que empiezen con 000x con extensión .py y dentro
-de la carpeta __pycache__ también no borrar los que dicen __init__.py
+de la carpeta __ pycache __ también no borrar los que dicen __ init__.py
 después intentar migrar de nuevo
