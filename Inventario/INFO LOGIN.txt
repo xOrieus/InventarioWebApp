@@ -1,0 +1,20 @@
+Para instalar los requerimientos
+
+'''
+pip install -r requirements.txt
+'''
+
+Para crear un usuario
+
+'''
+py manage.py createsuperuser
+'''
+
+colocar datos
+
+'''
+admin
+admin
+admin@admin.cl
+admin
+'''
