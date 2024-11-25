@@ -1,4 +1,6 @@
-Para instalar los requerimientos
+Crear la base de datos e importarla "inventario.sql"
+
+instalar los requerimientos
 
 '''
 pip install -r requirements.txt
