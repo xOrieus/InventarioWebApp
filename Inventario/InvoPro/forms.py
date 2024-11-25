@@ -42,7 +42,7 @@ class ProductoForm(forms.ModelForm):
             'departamento': forms.Select(attrs={'class': 'form-select'}),
         }
     
-    def validar_codigo(self):
+    def clean_codigo(self):
         codigo = self.cleaned_data.get("codigo")
         if len(codigo) > 16:
             raise forms.ValidationError("El código no puede tener más de 16 dígitos.")
@@ -50,7 +50,7 @@ class ProductoForm(forms.ModelForm):
             raise forms.ValidationError("El código debe contener solo dígitos.")
         return codigo
     
-    def validar_precio_costo(self):
+    def clean_precio_costo(self):
         precio_costo = self.cleaned_data.get("precio_costo")
         if len(precio_costo) > 10:
             raise forms.ValidationError("El Precio Costo no puede tener más de 10 dígitos.")
@@ -58,7 +58,7 @@ class ProductoForm(forms.ModelForm):
             raise forms.ValidationError("El Precio Costo debe contener solo dígitos.")
         return precio_costo
     
-    def validar_precio_venta(self):
+    def clean_precio_venta(self):
         precio_venta = self.cleaned_data.get("precio_venta")
         if len(precio_venta) > 10:
             raise forms.ValidationError("El Precio Venta no puede tener más de 10 dígitos.")
@@ -75,12 +75,12 @@ class DepartamentoForm(forms.ModelForm):
             'nombre': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del departamento'}),
         }
         
-    def validar_id(self):
+    def clean_id_departamento(self):
         id_departamento = self.cleaned_data.get("id_departamento")
         if len(id_departamento) > 16:
-            raise forms.ValidationError("El id no puede tener más de 16 dígitos.")
+            raise forms.ValidationError("El ID no puede tener más de 16 dígitos.")
         if not id_departamento.isdigit():
-            raise forms.ValidationError("El id debe contener solo dígitos.")
+            raise forms.ValidationError("El ID debe contener solo dígitos.")
         return id_departamento
     
 class ProveedorForm(forms.ModelForm):
@@ -99,21 +99,29 @@ class ProveedorForm(forms.ModelForm):
         
         }
         
-    def validar_id(self):
+    def clean_id_proveedor(self):
         id_proveedor = self.cleaned_data.get("id_proveedor")
         if len(id_proveedor) > 16:
-            raise forms.ValidationError("El id no puede tener más de 16 dígitos.")
+            raise forms.ValidationError("El ID no puede tener más de 16 dígitos.")
         if not id_proveedor.isdigit():
-            raise forms.ValidationError("El id debe contener solo dígitos.")
+            raise forms.ValidationError("El ID debe contener solo dígitos.")
         return id_proveedor
     
-    def validar_contacto(self):
+    def clean_contacto(self):
         contacto = self.cleaned_data.get("contacto")
         if len(contacto) != 8:
             raise forms.ValidationError("El contacto debe tener exactamente 8 dígitos.")
         if not contacto.isdigit():
             raise forms.ValidationError("El contacto debe contener solo dígitos.")
         return contacto
+    
+    def clean_numero(self):
+        numero = self.cleaned_data.get("numero")
+        if len(numero) > 6:
+            raise forms.ValidationError("El número de calle no puede tener más de 6 dígitos.")
+        if not numero.isdigit():
+            raise forms.ValidationError("El número de calle debe contener solo dígitos.")
+        return numero
     
     def clean_terminos_pago(self):
         terminos_de_pago = self.cleaned_data.get('terminos_de_pago', [])
@@ -135,20 +143,20 @@ class LoteForm(forms.ModelForm):
             'descripcion': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Ingrese la descripción del lote'}),
             'fecha_vencimiento': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}, format='%Y-%m-%d'),
             'fecha_fabricacion': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}, format='%Y-%m-%d'),
-            'cantidad_productos': forms.TextInput(attrs={'class': 'form-control' , 'placeholder': 'Ingrese la cantidad de productos'}),
-            'cantidad_disponible': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese la cantidad disponible'}),
+            'cantidad_productos': forms.TextInput(attrs={'class': 'form-control' ,'maxlength': '10', 'placeholder': 'Ingrese la cantidad de productos'}),
+            'cantidad_disponible': forms.TextInput(attrs={'class': 'form-control','maxlength': '10', 'placeholder': 'Ingrese la cantidad disponible'}),
         
         }
     
-    def validar_id(self):
+    def clean_id_lote(self):
         id_lote = self.cleaned_data.get("id_lote")
         if len(id_lote) > 16:
-            raise forms.ValidationError("El id no puede tener más de 16 dígitos.")
+            raise forms.ValidationError("El ID no puede tener más de 16 dígitos.")
         if not id_lote.isdigit():
-            raise forms.ValidationError("El id debe contener solo dígitos.")
+            raise forms.ValidationError("El ID debe contener solo dígitos.")
         return id_lote
     
-    def validar_cantidad_productos(self):
+    def clean_cantidad_productos(self):
         cantidad_productos = self.cleaned_data.get("cantidad_productos")
         if len(cantidad_productos) > 10:
             raise forms.ValidationError("La cantidad no puede tener más de 10 dígitos.")
@@ -156,7 +164,7 @@ class LoteForm(forms.ModelForm):
             raise forms.ValidationError("La cantidad debe contener solo dígitos.")
         return cantidad_productos
     
-    def validar_cantidad_disponible(self):
+    def clean_cantidad_disponible(self):
         cantidad_disponible = self.cleaned_data.get("cantidad_disponible")
         if len(cantidad_disponible) > 10:
             raise forms.ValidationError("La cantidad no puede tener más de 10 dígitos.")

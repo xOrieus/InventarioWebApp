@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario - Admin Dashboard</title>
+    <title>Departamentos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         body {
             height: 100vh;
@@ -45,10 +47,14 @@
 <body>
     <div class="sidebar">
         <h4 class="text-center mb-4">Inventario</h4>
-        <a href="/productos">Productos</a>
-        <a href="/proveedores">Proveedores</a>
-        <a href="/departamentos">Departamentos</a>
-        <a href="/lotes">Lotes</a>
+        <a href="/" >Inicio</a>
+        <a href="{% url 'productos' %}">Productos</a>
+        <a href="{% url 'proveedores' %}">Proveedores</a>
+        <a href="{% url 'departamentos' %}" class="nav-link active">Departamentos</a>
+        <a href="{% url 'lotes' %}">Lotes</a>
+        <hr class="my-5">
+
+        <a href="{% url 'logout' %}" class="nav-link">Cerrar Sesión</a>
     </div>
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div
@@ -60,8 +66,48 @@
         </div>
 
         <div class="d-grid gap-2">
-            <a href="/ingresar_departamento" class="btn btn-success" type="button">Ingresar departamento</a>
+            <a href="{% url 'ingresar_departamento' %}" class="btn btn-success" type="button">Ingresar departamento</a>
         </div>
+
+        <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Buscar Departamentos</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+            </div>
+        </div>
+            <div class="col-md-4">
+                <div>
+                    <form method="get" action="" class="mb-4">
+                        <div class="input-group">
+                            <select name="tipo" class="form-select" style="max-width: 150px;">
+                                <option value="id_departamento" {% if tipo_busqueda == 'id_departamento' %}selected{% endif %}>Por ID</option>
+                                <option value="nombre" {% if tipo_busqueda == 'nombre' %}selected{% endif %}>Por Nombre</option>
+                            </select>
+                            <input type="text" name="termino" class="form-control" 
+                                   placeholder="Buscar departamento..." 
+                                   value="{{ termino }}" required>
+                            <button class="btn btn-outline-primary" type="submit">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+                
+                {% if buscar %}
+                <div class="card">
+                    <div class="card-header">
+                        Departamento encontrado: {{ buscar.nombre }}
+                    </div>
+                    <div class="card-body">
+                        <p><strong>ID Departamento:</strong> {{ buscar.id_departamento }}</p>
+                        <p><strong>Nombre:</strong> {{ buscar.nombre }}</p>
+                    </div>
+                </div>
+                {% elif termino %}
+                <div class="alert alert-warning display-6 text-center">
+                    No se encontró el departamento
+                </div>
+                {% endif %}
+            </div>
+
 
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -87,7 +133,7 @@
                     <td style="word-wrap: break-word; min-width: 200px;  max-width: 200px;">{{ departamento.nombre }}</td>
 
                     <td class="table-warning" style="text-align: center;">
-                        <a href="/modificar_departamento/{{ departamento.id }}" class="btn btn-warning">Actualizar</a>
+                        <a href="{% url 'modificar_departamento' departamento.id %}" class="btn btn-warning">Actualizar</a>
                     </td>
                     <td class="table-danger" style="text-align: center;">
                         <button class="btn btn-danger ms-3" data-bs-toggle="modal" data-bs-target="#deleteModal{{ departamento.id }}">
@@ -112,7 +158,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a href="/eliminar_departamento/{{ departamento.id }}" class="btn btn-danger">Eliminar</a>
+                        <a href="{% url 'eliminar_departamento' departamento.id %}" class="btn btn-danger">Eliminar</a>
                     </div>
                 </div>
                 

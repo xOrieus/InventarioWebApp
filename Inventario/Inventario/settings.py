@@ -48,7 +48,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'django_auto_logout.middleware.auto_logout',
 ]
+
+AUTO_LOGOUT = {
+    'IDLE_TIME': 1800,  # Cierra sesión después de 30 minutos de inactividad
+    'MESSAGE': 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente para continuar.',
+    'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+}
 
 ROOT_URLCONF = "Inventario.urls"
 
@@ -124,3 +131,9 @@ STATICFILES_DIRS=[os.path.join(BASE_DIR, 'static')]
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Configuración de sesiones 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
+SESSION_COOKIE_AGE = 1800  # 30 minutos en segundos 
+ 
+LOGIN_URL = 'login'

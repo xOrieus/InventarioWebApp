@@ -6,9 +6,9 @@ from django.db import models
 class Producto(models.Model):
     codigo = models.CharField(max_length=16, unique=True)
     nombre = models.CharField(max_length=100)
-    precio_costo = models.DecimalField(max_digits=10, decimal_places=2)
-    descripcion = models.TextField()
-    precio_venta = models.DecimalField(max_digits=10, decimal_places=2)
+    precio_costo = models.CharField(max_length=10)
+    descripcion = models.TextField(blank=True)
+    precio_venta = models.CharField(max_length=10)
     proveedor = models.ForeignKey('Proveedor', on_delete=models.CASCADE)
     departamento = models.ForeignKey('Departamento', on_delete=models.CASCADE)
     
@@ -52,6 +52,10 @@ class Proveedor(models.Model):
     
     def __str__(self):
         return f"{self.id_proveedor} - {self.nombre}"
+    
+    def get_terminos_de_pago_display(self):
+        # Convertir el texto almacenado en lista y unirlo por comas para mostrarlo de forma correcta
+        return ", ".join(eval(self.terminos_de_pago))
 
 class Departamento(models.Model):
     id_departamento = models.CharField(max_length=16, unique=True)
@@ -64,7 +68,7 @@ class Lote(models.Model):
     id_lote = models.CharField(max_length=16, unique=True)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
+    descripcion = models.TextField(blank=True)
     fecha_vencimiento = models.DateField()
     fecha_fabricacion = models.DateField()
     cantidad_productos = models.CharField(max_length=10)
